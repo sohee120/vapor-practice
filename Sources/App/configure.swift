@@ -17,12 +17,11 @@ public func configure(_ app: Application) async throws {
         database: Environment.get("DATABASE_NAME") ?? "vapor_database",
         tls: .prefer(try .init(configuration: .clientDefault)))
     ), as: .psql)
-
     
-
+    app.migrations.add(CreateSongs())
     app.views.use(.leaf)
 
-    
+   // try app.autoMigrate().get() -> 오류 나옴
 
     // register routes
     try routes(app)
